@@ -1,0 +1,69 @@
+crie um checker que validar cartões
+
+deixe ele em tom de verde, preto e branco, e bonito ok, deixe ele tipo o da imagem, o botão ali de configuração serve para gerar o cartões, como na segunda imagem ele gerar de acordo com o metodo linuh cartões validos ok
+
+API PARA VERIFICAR OS CARDS: Endpoint
+POST https://api.chkr.cc/
+Request Format
+{
+    "data": "4242424242424242|12|2025|123"
+}
+Response Format
+{
+    "code": 0|1|2,        // 0: Die, 1: Live, 2: Unknown
+    "status": "Die|Live|Unknown",
+    "message": "Reason for the result",
+    "card": {
+        "card": "4242424242424242|12|2025|123",
+        "bank": "Bank Name",
+        "type": "visa|mastercard|etc",
+        "category": "credit|debit",
+        "brand": "Card Brand Name",
+        "country": {
+            "name": "Country Name",
+            "code": "Country Code",
+            "emoji": "🇺🇸",
+            "currency": "Currency Code",
+            "location": {
+                "latitude": 0,
+                "longitude": 0
+            }
+        }
+    }
+}
+Example Usage
+// Using jQuery
+$.post("https://api.chkr.cc/", {
+    data: "4242424242424242|12|2030|123"
+}, function(response) {
+    const result = JSON.parse(response);
+    console.log(result);
+});
+Error Codes
+CODE	STATUS	DESCRIPTION
+0	Die	Card validation failed
+1	Live	Card validation successful
+2	Unknown	Unable to determine card status
+
+
+
+RESPOSTAS DIE: Die | 4066553535156500|08|2030|414 | [BIN: 🇧🇷 - visa - credit] | Your card is declined
+
+RESPOSTAS DE ERRO: Unknown | 4066554445210742|03|2030|002 | [BIN: 🇧🇷 - visa - credit] | Request Timeout
+
+RESPOSTAS DE LIVE: Aprovada  370225379654846|12|2032|2032
+COLOCA DADOS DO CARTÃO AQUI COMO A BANDEIRA E O NOME DO BANCO
+Retorno: (Cartão Verificado com Sucesso)
+Tempo de resposta: (tempo que demorou pro site retornar a resposta)
+
+
+SITE PARA PEGAR OS DADOS DA BIN DO CARTÃO COMO BANDERIA E NOME DO BANCO:
+https://lookup.binlist.net/BIN AQUI
+
+exemplo: https://lookup.binlist.net/544915
+
+EXEMPLO DE RESPOSTAS EM JSON: {"number":{},"scheme":"mastercard","type":"credit","brand":"Platinum","country":{"numeric":"76","alpha2":"BR","name":"Brazil","emoji":"🇧🇷","currency":"BRL","latitude":-10,"longitude":-55},"bank":{"name":"Banco Do Estado Do Rio Grande Do Sul S.A. (Banrisul S.A.)"}}
+
+
+Só formatar pro trem certo e retornar bonito
+
